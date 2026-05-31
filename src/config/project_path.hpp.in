@@ -1,0 +1,11 @@
+#ifndef ROUNDHELL_CONFIG_PROJECT_PATH_HPP
+#define ROUNDHELL_CONFIG_PROJECT_PATH_HPP
+
+namespace rh {
+
+inline constexpr auto PROJECT_PATH = std::string_view{"@CMAKE_SOURCE_DIR@"};
+
+}; // namespace rh
+
+#endif // ROUNDHELL_CONFIG_PROJECT_PATH_HPP
+

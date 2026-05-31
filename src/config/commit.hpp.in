@@ -1,0 +1,15 @@
+#ifndef ROUNDHELL_CONFIG_COMMIT_HPP
+#define ROUNDHELL_CONFIG_COMMIT_HPP
+
+/**
+ * @file src/config/commit.hpp
+ * @brief CMake-generated file with Git commit ID.
+ *
+ * This file will be included automatically by `src/version.hpp` - no need to include it manually.
+ */
+
+/** @brief Commit ID of current build. */
+#define ROUNDHELL_COMMIT "@ROUNDHELL_COMMIT@"
+
+#endif // ROUNDHELL_CONFIG_COMMIT_HPP
+
