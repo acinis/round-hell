@@ -39,5 +39,6 @@ target_sources(${COMMON_OBJS}
 		"${CMAKE_CURRENT_SOURCE_DIR}/systems/animation.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/systems/sprite_renderer.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/systems/fps_limiter.cpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/systems/frame_counter.cpp"
 )
 
