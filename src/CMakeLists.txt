@@ -26,5 +26,6 @@ target_sources(${COMMON_OBJS}
 		"${CMAKE_CURRENT_SOURCE_DIR}/subtexture.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/components/sprite.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/components/animation.cpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/loaders/sdl_texture_loader.cpp"
 )
 
