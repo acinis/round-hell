@@ -32,5 +32,6 @@ target_sources(${COMMON_OBJS}
 		"${CMAKE_CURRENT_SOURCE_DIR}/data/resources_data.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/components/relation.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/utils/traverse.cpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/utils/entt.cpp"
 )
 
