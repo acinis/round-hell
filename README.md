@@ -57,7 +57,13 @@ cd bin/Release/
 * [EnTT](https://github.com/skypjack/entt)
 * [GLM](https://github.com/g-truc/glm)
 
+# Used assets
+
+* *"Free CC0 Modular Animated Vector Characters 2D"* available [here](https://rgsdev.itch.io/free-cc0-modular-animated-vector-characters-2d) under CC0 License.
+
 # License
 
 Code released under the [**MIT license**](/LICENSE.txt).
+
+Assets adapted from asset pack under CC0 License by Raphael Gonçalves ([Rgsdev](https://rgsdev.itch.io/)).
 
