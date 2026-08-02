@@ -43,5 +43,6 @@ target_sources(${COMMON_OBJS}
 		"${CMAKE_CURRENT_SOURCE_DIR}/components/movement.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/systems/movement.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/systems/random_movement.cpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/entity_builder.cpp"
 )
 
