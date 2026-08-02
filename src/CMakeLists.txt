@@ -37,5 +37,6 @@ target_sources(${COMMON_OBJS}
 		"${CMAKE_CURRENT_SOURCE_DIR}/systems/world_transform_updater.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/components/order.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/systems/animation.cpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/systems/sprite_renderer.cpp"
 )
 
