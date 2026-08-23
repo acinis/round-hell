@@ -22,5 +22,6 @@ target_sources(${COMMON_OBJS}
 		"${CMAKE_CURRENT_SOURCE_DIR}/utils.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/errors.cpp"
 		"${CMAKE_CURRENT_SOURCE_DIR}/clock.cpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/any_component.cpp"
 )
 
