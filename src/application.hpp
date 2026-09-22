@@ -43,6 +43,8 @@ class Application
 	entt::registry _registry;
 	entt::entity _root;
 
+	bool _low_power; // If multiple GPUs are available - prefer low-power one.
+
 	ResourceMultiCache _resource_multi_cache;
 
 	S::FpsLimiter _fps_limiter;

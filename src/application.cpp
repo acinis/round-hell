@@ -182,6 +182,10 @@ auto Application::_handle_app_args() noexcept -> void
 	if (check("--no-fps-limit"sv)) {
 		_fps_limiter.limit(0);
 	}
+
+	if (check("--low-power"sv)) {
+		_low_power = true;
+	}
 }
 
 auto Application::_mockup() -> void
@@ -336,11 +340,18 @@ Application::Application(std::vector<std::string_view> args)
 	_renderer {nullptr},
 	_registry {},
 	_root {entt::null},
+	_low_power{false},
 	_resource_multi_cache {},
 	_fps_limiter{60},
 	_random_movement{0, 0, _window_size.x, _window_size.y}
 {
 	_handle_app_args();
+
+	if (_low_power) {
+		if (! SDL_SetHint(SDL_HINT_RENDER_GPU_LOW_POWER, "1")) {
+			throw std::runtime_error{make_sdl_error("Cannot set 'SDL_HINT_RENDER_GPU_LOW_POWER' hint").to_string()};
+		}
+	}
 
 	if (! SDL_Init(_init_flags)) {
 		throw std::runtime_error{make_sdl_error("Cannot initialize SDL").to_string()};
