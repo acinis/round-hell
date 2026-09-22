@@ -189,7 +189,7 @@ auto Application::_mockup() -> void
 	_mockup_swarm();
 }
 
-auto Application::_mockup_swarm() -> void
+auto Application::_mockup_swarm(std::size_t swarm_size) -> void
 {
 	_root = make_entity(_registry)
 		.emplace<C::Order>(C::Order::LOWEST)
@@ -224,7 +224,7 @@ auto Application::_mockup_swarm() -> void
 		MOVEMENT_SPEED_SLOW,
 	};
 
-	for (int i = 0; i < 100; i++) {
+	for (std::size_t i = 0; i < swarm_size; i++) {
 		auto entity = _spawn(
 			_root,
 			ids[i % ids.size()],

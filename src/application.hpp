@@ -66,7 +66,7 @@ class Application
 	auto _handle_app_args() noexcept -> void;
 
 	auto _mockup() -> void;
-	auto _mockup_swarm() -> void;
+	auto _mockup_swarm(std::size_t swarm_size = 100) -> void;
 
 	// Spawn game object
 	auto _spawn(entt::entity parent, entt::hashed_string::hash_type prototype_id, SDL_FPoint position) noexcept -> entt::entity;
