@@ -343,17 +343,17 @@ Application::Application(std::vector<std::string_view> args)
 	_handle_app_args();
 
 	if (! SDL_Init(_init_flags)) {
-		throw std::runtime_error{make_sdl_error("Cannot initialize SDL: ").to_string()};
+		throw std::runtime_error{make_sdl_error("Cannot initialize SDL").to_string()};
 	}
 
 	_window = SDL_CreateWindow("round-hell", _window_size.x, _window_size.y, _window_flags);
 	if (! _window) {
-		throw std::runtime_error{make_sdl_error("Cannot create window: ").to_string()};
+		throw std::runtime_error{make_sdl_error("Cannot create window").to_string()};
 	}
 
 	_renderer = SDL_CreateRenderer(_window, nullptr);
 	if (! _renderer) {
-		throw std::runtime_error{make_sdl_error("error: Cannot create renderer: ").to_string()};
+		throw std::runtime_error{make_sdl_error("error: Cannot create renderer").to_string()};
 	}
 
 	if (auto r = _prepare_resources(); !r) {
