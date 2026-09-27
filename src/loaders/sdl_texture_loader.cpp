@@ -2,6 +2,7 @@
 
 #include <cassert>
 
+#include <SDL3/SDL_surface.h>
 #include <SDL3_image/SDL_image.h>
 
 namespace rh {
@@ -18,6 +19,11 @@ auto SdlTextureLoader::operator()(std::optional<Error>& error, SDL_Renderer *ren
 
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 	if (! texture) {
+		error = make_sdl_error();
+		return nullptr;
+	}
+
+	if (! SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST)) {
 		error = make_sdl_error();
 		return nullptr;
 	}
@@ -65,6 +71,11 @@ auto SdlTextureLoader::operator()(std::optional<Error>& error, SDL_Renderer *ren
 {
 	SDL_Texture* texture = SDL_CreateTexture(renderer, format, SDL_TEXTUREACCESS_TARGET, w, h);
 	if (! texture) {
+		error = make_sdl_error();
+		return nullptr;
+	}
+
+	if (! SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST)) {
 		error = make_sdl_error();
 		return nullptr;
 	}
