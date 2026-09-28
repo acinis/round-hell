@@ -25,8 +25,8 @@ auto Sprite::subtexture() -> Subtexture
 
 auto Sprite::rect(SDL_Rect rect) -> void
 {
-	auto sdl_texture = _subtexture.raw();
-	_subtexture = Subtexture{sdl_texture, to_frect(rect)};
+	auto texture = _subtexture.handle();
+	_subtexture = Subtexture{texture, to_frect(rect)};
 }
 
 auto Sprite::rect() const -> SDL_Rect

@@ -206,7 +206,7 @@ auto Application::_mockup_swarm(std::size_t swarm_size) -> void
 		.emplace<C::Order>(C::Order::LOWEST + 100)
 		.emplace<C::LocalTransform>(to_mat4(0.0f, 0.0f))
 		.emplace<C::WorldTransform>()
-		.emplace<C::Sprite>(*(_resource_multi_cache.get<Subtexture>("bg-color"_hs).handle().get()))
+		.emplace<C::Sprite>(_resource_multi_cache.get<Subtexture>("bg-color"_hs))
 		.get_entity()
 	;
 	RH_UNUSED(entity_bg);

@@ -8,7 +8,7 @@ auto SubtextureLoader::operator()(std::optional<Error>& error, entt::resource<SD
 {
 	RH_UNUSED(error);
 
-	return std::make_shared<Subtexture>(texture.handle().get(), rect);
+	return std::make_shared<Subtexture>(texture, rect);
 }
 
 auto SubtextureLoader::operator()(std::optional<Error>& error, entt::resource<SDL_Texture> texture, SDL_Rect rect) const noexcept -> result_type
@@ -20,7 +20,7 @@ auto SubtextureLoader::operator()(std::optional<Error>& error, entt::resource<SD
 {
 	RH_UNUSED(error);
 
-	return std::make_shared<Subtexture>(texture.handle().get());
+	return std::make_shared<Subtexture>(texture);
 }
 
 } // namespace rh
