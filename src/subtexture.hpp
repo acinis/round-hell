@@ -9,6 +9,8 @@
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 
+#include <entt/resource/resource.hpp>
+
 namespace rh {
 
 /**
@@ -16,7 +18,7 @@ namespace rh {
  */
 class Subtexture final
 {
-	SDL_Texture* _texture {nullptr}; //!< whole texture (eg. altas or sprite sheet)
+	entt::resource<SDL_Texture> _texture {}; //!< whole texture (eg. altas or sprite sheet)
 
 	float _x {0.0f}; //!< x offset (position in whole texture)
 	float _y {0.0f}; //!< y offset (position in whole texture)
@@ -36,13 +38,13 @@ public:
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 * - `x` and `y` are checked against `w` and `h` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `entt::resource<SDL_Texture>` instance for underlying texture data.
 	 * @param x Subtexture `x` offset inside whole texture.
 	 * @param y Subtexture `y` offset inside whole texture.
 	 * @param w Subtexture width.
 	 * @param h Subtexture height.
 	 */
-	Subtexture(SDL_Texture *texture, float x, float y, float w, float h) noexcept;
+	Subtexture(entt::resource<SDL_Texture> texture, float x, float y, float w, float h) noexcept;
 
 	/**
 	 * @brief Creates a new `Subtexture` instance.
@@ -52,11 +54,11 @@ public:
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 * - `x` and `y` are checked against `w` and `h` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `entt::resource<SDL_Texture>` instance for underlying texture data.
 	 * @param offset Subtexture `x` and `y` offset inside whole texture.
 	 * @param size Subtexture size (width is `size.x` and height is `size.y`).
 	 */
-	Subtexture(SDL_Texture *texture, SDL_FPoint offset, SDL_FPoint size) noexcept;
+	Subtexture(entt::resource<SDL_Texture> texture, SDL_FPoint offset, SDL_FPoint size) noexcept;
 
 	/**
 	 * @brief Creates a new `Subtexture` instance.
@@ -66,10 +68,10 @@ public:
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 * - `x` and `y` are checked against `w` and `h` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `entt::resource<SDL_Texture>` instance for underlying texture data.
 	 * @param rect Subtexture rectangle (offset - `rect.x`, `rect.y` and size - `rect.w`, `rect.h`).
 	 */
-	Subtexture(SDL_Texture *texture, SDL_FRect rect) noexcept;
+	Subtexture(entt::resource<SDL_Texture> texture, SDL_FRect rect) noexcept;
 
 	/**
 	 * @brief Creates a new `Subtexture` instance with default offset (0.0f, 0.0f).
@@ -79,11 +81,11 @@ public:
 	 * @warning
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `entt::resource<SDL_Texture>` instance for underlying texture data.
 	 *
 	 * @throw rh::RuntimeException If there is an error getting texture size.
 	 */
-	Subtexture(SDL_Texture *texture);
+	Subtexture(entt::resource<SDL_Texture> texture);
 
 	/**
 	 * @brief Creates a new `Subtexture` instance with default offset (0.0f, 0.0f).
@@ -92,11 +94,11 @@ public:
 	 * - `w`, `h` are not validated if they are in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `entt::resource<SDL_Texture>` instance for underlying texture data.
 	 * @param w Subtexture width.
 	 * @param h Subtexture height.
 	 */
-	Subtexture(SDL_Texture *texture, float w, float h) noexcept;
+	Subtexture(entt::resource<SDL_Texture> texture, float w, float h) noexcept;
 
 	/**
 	 * @brief Creates a new `Subtexture` instance with default offset (0.0f, 0.0f).
@@ -105,11 +107,11 @@ public:
 	 * - `size` is not validated if it is in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `entt::resource<SDL_Texture>` instance for underlying texture data.
 	 * @param size Subtexture size (width is `size.x` and height is `size.y`).
 	 * @return
 	 */
-	Subtexture(SDL_Texture *texture, SDL_FPoint size) noexcept;
+	Subtexture(entt::resource<SDL_Texture> texture, SDL_FPoint size) noexcept;
 
 	/**
 	 * @brief Default copy constructor.
@@ -137,6 +139,13 @@ public:
 	 * @return This `Subtexture` instance.
 	 */
 	auto operator=(Subtexture&&) noexcept -> Subtexture& = default;
+
+	/**
+	 * @brief Get handle to underlying resource.
+	 *
+	 * @return Underlying resource handle.
+	 */
+	auto handle() noexcept -> entt::resource<SDL_Texture>;
 
 	/**
 	 * @brief Get raw pointer to underlying texture.
