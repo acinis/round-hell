@@ -19,15 +19,7 @@
 #include "data/resources_data.hpp"
 #include "errors.hpp"
 #include "resource_multi_cache.hpp"
-
-#include "systems/fps_limiter.hpp"
-#include "systems/frame_counter.hpp"
-#include "systems/animation.hpp"
-#include "systems/movement.hpp"
-#include "systems/random_movement.hpp"
-#include "systems/sorter.hpp"
-#include "systems/sprite_renderer.hpp"
-#include "systems/world_transform_updater.hpp"
+#include "systems.hpp"
 
 namespace rh {
 
@@ -47,14 +39,7 @@ class Application
 
 	ResourceMultiCache _resource_multi_cache;
 
-	S::FpsLimiter _fps_limiter;
-	S::FrameCounter _frame_counter;
-	S::WorldTransformUpdater _world_transform_updater;
-	S::SpriteRenderer _sprite_renderer;
-	S::Animation _animation;
-	S::Movement _movement;
-	S::RandomMovement _random_movement;
-	S::Sorter _sorter;
+	Systems _systems;
 
 	auto _print_welcome() -> void;
 	auto _print_goodbye() -> void;

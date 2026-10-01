@@ -61,12 +61,12 @@ auto Application::_print_welcome() -> void
 auto Application::_print_goodbye() -> void
 {
 	std::println("» Time elapsed: {:.4f}s ({:.1f}m)",
-		_frame_counter.total_time() / 1000.0f,
-		_frame_counter.total_time() / 1000.0f / 60.0f
+		_systems.frame_counter.total_time() / 1000.0f,
+		_systems.frame_counter.total_time() / 1000.0f / 60.0f
 	);
-	std::println("» Rendered {} frames", _frame_counter.frame_count());
-	std::println("» At average there was {:.2f} frames per second", _frame_counter.average_frame_rate());
-	std::println("» At average each frame took {:.2f} ms", _frame_counter.average_frame_time());
+	std::println("» Rendered {} frames", _systems.frame_counter.frame_count());
+	std::println("» At average there was {:.2f} frames per second", _systems.frame_counter.average_frame_rate());
+	std::println("» At average each frame took {:.2f} ms", _systems.frame_counter.average_frame_time());
 }
 
 auto Application::_prepare_resources() noexcept -> Expected<void>
@@ -186,7 +186,7 @@ auto Application::_handle_app_args() noexcept -> void
 	};
 
 	if (check("--no-fps-limit"sv)) {
-		_fps_limiter.limit(0);
+		_systems.fps_limiter.limit(0);
 	}
 
 	if (check("--low-power"sv)) {
@@ -278,7 +278,7 @@ auto Application::_post_render() noexcept -> Expected<void>
 auto Application::_loop(Uint64 time_per_update, std::size_t max_updates) noexcept -> Expected<int>
 {
 	// Startup phase
-	_frame_counter.reset();
+	_systems.frame_counter.reset();
 
 	bool running = true;
 	Clock game_clock; // ie. iteration clock
@@ -296,11 +296,11 @@ auto Application::_loop(Uint64 time_per_update, std::size_t max_updates) noexcep
 
 			// Update phase
 			// Note: `time_per_update` is delta time.
-			_world_transform_updater.run(_registry, _root);
-			_sorter.run<C::Sprite>(_registry);
-			_animation.run(time_per_update, _registry, _root);
-			_movement.run(time_per_update, _registry, _root);
-			_random_movement.run(time_per_update, _registry, _root);
+			_systems.world_transform_updater.run(_registry, _root);
+			_systems.sorter.run<C::Sprite>(_registry);
+			_systems.animation.run(time_per_update, _registry, _root);
+			_systems.movement.run(time_per_update, _registry, _root);
+			_systems.random_movement.run(time_per_update, _registry, _root);
 
 			lag -= time_per_update;
 			update_count += 1;
@@ -322,15 +322,15 @@ auto Application::_loop(Uint64 time_per_update, std::size_t max_updates) noexcep
 			return Unexpected{e.error()};
 		}
 
-		_sprite_renderer.run(elapsed, _renderer, _registry, _root);
+		_systems.sprite_renderer.run(elapsed, _renderer, _registry, _root);
 
 		if (auto e = _post_render(); !e) {
 			return Unexpected{e.error()};
 		}
 
-		_fps_limiter.run(game_clock.elapsed());
+		_systems.fps_limiter.run(game_clock.elapsed());
 
-		_frame_counter.frame_done();
+		_systems.frame_counter.frame_done();
 	}
 
 	return 0;
@@ -348,8 +348,10 @@ Application::Application(std::vector<std::string_view> args)
 	_root {entt::null},
 	_low_power{false},
 	_resource_multi_cache {},
-	_fps_limiter{60},
-	_random_movement{0, 0, _window_size.x, _window_size.y}
+	_systems{
+		.fps_limiter{60},
+		.random_movement{0, 0, _window_size.x, _window_size.y},
+	}
 {
 	_handle_app_args();
 
