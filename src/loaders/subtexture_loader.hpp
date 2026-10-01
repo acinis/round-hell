@@ -38,8 +38,6 @@ struct SubtextureLoader
 	auto operator()(std::optional<Error>& error, entt::resource<SDL_Texture> texture, SDL_FRect rect) const noexcept -> result_type;
 
 	auto operator()(std::optional<Error>& error, entt::resource<SDL_Texture> texture, SDL_Rect rect) const noexcept -> result_type;
-
-	auto operator()(std::optional<Error>& error, entt::resource<SDL_Texture> texture) const noexcept -> result_type;
 };
 
 template<>

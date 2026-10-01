@@ -108,7 +108,13 @@ auto Application::_prepare_resources() noexcept -> Expected<void>
 		}
 
 		auto texture = _resource_multi_cache.get<SDL_Texture>(texture_id);
-		r = _resource_multi_cache.load<Subtexture>(subtexture_id, texture);
+
+		auto rect = SDL_FRect{0.0f, 0.0f, 0.0f, 0.0f};
+		if (! SDL_GetTextureSize(&*texture, &rect.w, &rect.h)) {
+			return Unexpected{make_sdl_error()};
+		}
+
+		r = _resource_multi_cache.load<Subtexture>(subtexture_id, texture, rect);
 		if (! r) {
 			return Unexpected{r.error()};
 		}
