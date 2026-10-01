@@ -9,14 +9,27 @@
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 
+#include <entt/resource/resource.hpp>
+
+#include "concepts.hpp"
+
 namespace rh {
 
 /**
- * @brief Tight wrapper around `SDL_Texture` that has offset and size. Ideal for using with atlases.
+ * @brief
+ * @tparam
  */
-class Subtexture final
+template<typename T>
+concept SdlTexturePointerLike = ConcretePointerLike<T, SDL_Texture>;
+
+/**
+ * @brief Tight wrapper around `SDL_Texture` that has offset and size. Ideal for using with atlases.
+ * @tparam
+ */
+template<SdlTexturePointerLike TextureHandleType>
+class BasicSubtexture final
 {
-	SDL_Texture* _texture {nullptr}; //!< whole texture (eg. altas or sprite sheet)
+	TextureHandleType _texture {}; //!< whole texture (eg. altas or sprite sheet)
 
 	float _x {0.0f}; //!< x offset (position in whole texture)
 	float _y {0.0f}; //!< y offset (position in whole texture)
@@ -26,123 +39,130 @@ class Subtexture final
 public:
 
 	/** @brief Default initialization is not allowed. */
-	Subtexture() = delete;
+	BasicSubtexture() = delete;
 
 	/**
-	 * @brief Creates a new `Subtexture` instance.
+	 * @brief Creates a new `BasicSubtexture` instance.
 	 *
 	 * @warning
 	 * - `x`, `y`, `w`, `h` are not validated if they are in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 * - `x` and `y` are checked against `w` and `h` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `TextureHandleType` instance for underlying texture data.
 	 * @param x Subtexture `x` offset inside whole texture.
 	 * @param y Subtexture `y` offset inside whole texture.
 	 * @param w Subtexture width.
 	 * @param h Subtexture height.
 	 */
-	Subtexture(SDL_Texture *texture, float x, float y, float w, float h) noexcept;
+	BasicSubtexture(TextureHandleType texture, float x, float y, float w, float h) noexcept;
 
 	/**
-	 * @brief Creates a new `Subtexture` instance.
+	 * @brief Creates a new `BasicSubtexture` instance.
 	 *
 	 * @warning
 	 * - `offset` and `size` are not validated if they are in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 * - `x` and `y` are checked against `w` and `h` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `TextureHandleType` instance for underlying texture data.
 	 * @param offset Subtexture `x` and `y` offset inside whole texture.
 	 * @param size Subtexture size (width is `size.x` and height is `size.y`).
 	 */
-	Subtexture(SDL_Texture *texture, SDL_FPoint offset, SDL_FPoint size) noexcept;
+	BasicSubtexture(TextureHandleType texture, SDL_FPoint offset, SDL_FPoint size) noexcept;
 
 	/**
-	 * @brief Creates a new `Subtexture` instance.
+	 * @brief Creates a new `BasicSubtexture` instance.
 	 *
 	 * @warning
 	 * - `rect` is not validated if it is in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 * - `x` and `y` are checked against `w` and `h` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `TextureHandleType` instance for underlying texture data.
 	 * @param rect Subtexture rectangle (offset - `rect.x`, `rect.y` and size - `rect.w`, `rect.h`).
 	 */
-	Subtexture(SDL_Texture *texture, SDL_FRect rect) noexcept;
+	BasicSubtexture(TextureHandleType texture, SDL_FRect rect) noexcept;
 
 	/**
-	 * @brief Creates a new `Subtexture` instance with default offset (0.0f, 0.0f).
+	 * @brief Creates a new `BasicSubtexture` instance with default offset (0.0f, 0.0f).
 	 *
 	 * This will query underlying texture for width and height, and can throw!
 	 *
 	 * @warning
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `TextureHandleType` instance for underlying texture data.
 	 *
 	 * @throw rh::RuntimeException If there is an error getting texture size.
 	 */
-	Subtexture(SDL_Texture *texture);
+	BasicSubtexture(TextureHandleType texture);
 
 	/**
-	 * @brief Creates a new `Subtexture` instance with default offset (0.0f, 0.0f).
+	 * @brief Creates a new `BasicSubtexture` instance with default offset (0.0f, 0.0f).
 	 *
 	 * @warning
 	 * - `w`, `h` are not validated if they are in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `TextureHandleType` instance for underlying texture data.
 	 * @param w Subtexture width.
 	 * @param h Subtexture height.
 	 */
-	Subtexture(SDL_Texture *texture, float w, float h) noexcept;
+	BasicSubtexture(TextureHandleType texture, float w, float h) noexcept;
 
 	/**
-	 * @brief Creates a new `Subtexture` instance with default offset (0.0f, 0.0f).
+	 * @brief Creates a new `BasicSubtexture` instance with default offset (0.0f, 0.0f).
 	 *
 	 * @warning
 	 * - `size` is not validated if it is in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
 	 *
-	 * @param texture Pointer to `SDL_Texture` for underlying texture data.
+	 * @param texture `TextureHandleType` instance for underlying texture data.
 	 * @param size Subtexture size (width is `size.x` and height is `size.y`).
 	 * @return
 	 */
-	Subtexture(SDL_Texture *texture, SDL_FPoint size) noexcept;
+	BasicSubtexture(TextureHandleType texture, SDL_FPoint size) noexcept;
 
 	/**
 	 * @brief Default copy constructor.
 	 */
-	Subtexture(const Subtexture&) noexcept = default;
+	BasicSubtexture(const BasicSubtexture&) noexcept = default;
 
 	/**
 	 * @brief Default move constructor.
 	 */
-	Subtexture(Subtexture&&) noexcept = default;
+	BasicSubtexture(BasicSubtexture&&) noexcept = default;
 
 	/**
 	 * @brief Default destructor.
 	 */
-	~Subtexture() = default;
+	~BasicSubtexture() = default;
 
 	/**
 	 * @brief Default copy assignment operator.
-	 * @return This `Subtexture` instance.
+	 * @return This `BasicSubtexture` instance.
 	 */
-	auto operator=(const Subtexture&) noexcept -> Subtexture& = default;
+	auto operator=(const BasicSubtexture&) noexcept -> BasicSubtexture& = default;
 
 	/**
 	 * @brief Default move assignment operator.
-	 * @return This `Subtexture` instance.
+	 * @return This `BasicSubtexture` instance.
 	 */
-	auto operator=(Subtexture&&) noexcept -> Subtexture& = default;
+	auto operator=(BasicSubtexture&&) noexcept -> BasicSubtexture& = default;
+
+	/**
+	 * @brief Get handle to underlying resource.
+	 *
+	 * @return Underlying resource handle.
+	 */
+	auto handle() noexcept -> TextureHandleType;
 
 	/**
 	 * @brief Get raw pointer to underlying texture.
 	 *
-	 * @warning Changes to this data will be not reflected automatically in `Subtexture` instance.
-	 * @warning This gives access to *whole* texture, not only part used by `Subtexture` instance.
+	 * @warning Changes to this data will be not reflected automatically in `BasicSubtexture` instance.
+	 * @warning This gives access to *whole* texture, not only part used by `BasicSubtexture` instance.
 	 *
 	 * @return Pointer to underlying `SDL_Texture`.
 	 */
@@ -191,7 +211,14 @@ public:
 	auto h() const noexcept -> float;
 };
 
+/**
+ * @brief
+ */
+using Subtexture = BasicSubtexture<entt::resource<SDL_Texture>>;
+
 } // namespace rh
+
+#include "subtexture.ipp"
 
 #endif // ROUNDHELL_SUBTEXTURE_HPP
 
