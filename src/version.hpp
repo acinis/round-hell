@@ -13,7 +13,7 @@
 /** @brief Minor version number macro. */
 #define ROUNDHELL_VERSION_MINOR 2
 /** @brief Patch version number macro. */
-#define ROUNDHELL_VERSION_PATCH 6
+#define ROUNDHELL_VERSION_PATCH 7
 
 /** @cond INTERNAL */
 // [X]STR macros fits into utils, but I don't like to `#include` it here.
