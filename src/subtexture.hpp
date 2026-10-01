@@ -87,20 +87,6 @@ public:
 	/**
 	 * @brief Creates a new `BasicSubtexture` instance with default offset (0.0f, 0.0f).
 	 *
-	 * This will query underlying texture for width and height, and can throw!
-	 *
-	 * @warning
-	 * - `texture` is checked against `nullptr` only in debug build via assertion.
-	 *
-	 * @param texture `TextureHandleType` instance for underlying texture data.
-	 *
-	 * @throw rh::RuntimeException If there is an error getting texture size.
-	 */
-	BasicSubtexture(TextureHandleType texture);
-
-	/**
-	 * @brief Creates a new `BasicSubtexture` instance with default offset (0.0f, 0.0f).
-	 *
 	 * @warning
 	 * - `w`, `h` are not validated if they are in range of given texture size.
 	 * - `texture` is checked against `nullptr` only in debug build via assertion.
