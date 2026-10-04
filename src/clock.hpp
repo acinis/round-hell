@@ -15,7 +15,7 @@ namespace rh {
  */
 class Clock final
 {
-	Uint64 _start; //!< Clock start time, in milliseconds.
+	Uint64 _start; //!< Clock start time, in nanoseconds.
 
 public:
 
@@ -32,14 +32,14 @@ public:
 	/**
 	 * @brief Elapsed time since this `Clock` creation or last call to `restart()`.
 	 *
-	 * @return Elapsed time (in milliseconds).
+	 * @return Elapsed time (in nanoseconds).
 	 */
 	[[nodiscard]] auto elapsed() const noexcept -> Uint64;
 
 	/**
 	 * @brief Restart clock so it will measure elapsed time since now.
 	 *
-	 * @return Elapsed time (in milliseconds).
+	 * @return Elapsed time (in nanoseconds).
 	 */
 	auto restart() noexcept -> Uint64;
 };
