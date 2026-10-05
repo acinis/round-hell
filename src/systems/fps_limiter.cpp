@@ -27,12 +27,10 @@ auto FpsLimiter::limit() const noexcept -> std::size_t
 auto FpsLimiter::run(Uint64 elapsed) const noexcept -> Uint64
 {
 	if (_fps_limit > 0) {
-		Uint64 min_time_per_frame = 1000 / _fps_limit;
+		Uint64 min_time_per_frame = from_seconds(1) / _fps_limit; // in [ns]
 		Uint64 sleep_time = saturating_sub(min_time_per_frame, elapsed);
 		if (sleep_time > 0) {
-			// Convert from [ms] to [ns]
-			Uint64 sleep_time_ns = sleep_time * 1'000'000;
-			SDL_DelayPrecise(sleep_time_ns);
+			SDL_DelayPrecise(sleep_time);
 			return sleep_time;
 		}
 	}

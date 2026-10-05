@@ -115,6 +115,15 @@ auto rand(IntType a, IntType b) -> ReturnType;
 template<std::unsigned_integral T>
 constexpr auto saturating_sub(T x, T y) noexcept -> T;
 
+// Convert from or to nanoseconds.
+constexpr auto from_seconds(Uint64 value) noexcept -> Uint64;
+constexpr auto from_milliseconds(Uint64 value) noexcept -> Uint64;
+constexpr auto to_seconds(Uint64 value) noexcept -> Uint64;
+constexpr auto to_milliseconds(Uint64 value) noexcept -> Uint64;
+constexpr auto to_fseconds(Uint64 value) noexcept -> float;
+constexpr auto to_fmilliseconds(Uint64 value) noexcept -> float;
+constexpr auto to_fminutes(Uint64 value) noexcept -> float;
+
 } // namespace rh
 
 #include "utils.ipp"

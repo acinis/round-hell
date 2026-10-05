@@ -12,6 +12,7 @@ using Catch::Matchers::WithinAbs;
 
 #include "errors.hpp"
 #include "subtexture.hpp"
+#include "utils.hpp"
 
 TEST_CASE("BasicSubtexture", "[basic_subtexture]")
 {
@@ -79,35 +80,6 @@ TEST_CASE("BasicSubtexture", "[basic_subtexture]")
 		REQUIRE_THAT(subtexture.h(), WithinAbs(rect.h, 0.01f));
 	}
 
-	SECTION("BasicSubtexture(TextureHandleType, ) constructor")
-	{
-		try {
-			auto subtexture = rh::BasicSubtexture<entt::resource<SDL_Texture>>{texture};
-			REQUIRE(subtexture.raw() == texture.handle().get());
-			REQUIRE_THAT(subtexture.x(), WithinAbs(0.0f, 0.01f));
-			REQUIRE_THAT(subtexture.y(), WithinAbs(0.0f, 0.01f));
-			REQUIRE_THAT(subtexture.w(), WithinAbs(w * 1.0f, 0.01f));
-			REQUIRE_THAT(subtexture.h(), WithinAbs(h * 1.0f, 0.01f));
-		}
-		catch(std::runtime_error& e) {
-			FAIL("Valid texture failed with std::runtime_error: " << e.what());
-		}
-	}
-
-	SECTION("BasicSubtexture(TextureHandleType, ) constructor - exception check")
-	{
-		#ifdef NDEBUG
-			try {
-				auto subtexture = rh::BasicSubtexture<entt::resource<SDL_Texture>>{entt::resource<SDL_Texture>{nullptr}};
-			}
-			catch(std::runtime_error& e) {
-				SUCCEED("Exception thrown on failure");
-			}
-		#else
-			SKIP("This test cannot be performed in DEBUG build.");
-		#endif
-	}
-
 	SECTION("BasicSubtexture(entt::resource<SDL_Texture>, float, float) constructor")
 	{
 		auto size = SDL_FPoint{9.0f, 9.0f};
@@ -132,7 +104,7 @@ TEST_CASE("BasicSubtexture", "[basic_subtexture]")
 
 	SECTION("BasicSubtexture copy constructor")
 	{
-		rh::BasicSubtexture<entt::resource<SDL_Texture>> subtexture_1 {texture};
+		rh::BasicSubtexture<entt::resource<SDL_Texture>> subtexture_1 {texture, rh::to_frect({0, 0, w, h})};
 		rh::BasicSubtexture<entt::resource<SDL_Texture>> subtexture_2 {subtexture_1};
 		REQUIRE(subtexture_1.raw() == texture.handle().get());
 		REQUIRE(subtexture_2.raw() == texture.handle().get());
@@ -156,7 +128,7 @@ TEST_CASE("BasicSubtexture", "[basic_subtexture]")
 
 	SECTION("BasicSubtexture copy assignment operator")
 	{
-		rh::BasicSubtexture<entt::resource<SDL_Texture>> subtexture_1 {texture};
+		rh::BasicSubtexture<entt::resource<SDL_Texture>> subtexture_1 {texture, rh::to_frect({0, 0, w, h})};
 		rh::BasicSubtexture<entt::resource<SDL_Texture>> subtexture_2 = subtexture_1;
 		REQUIRE(subtexture_1.raw() == texture.handle().get());
 		REQUIRE(subtexture_2.raw() == texture.handle().get());
@@ -180,13 +152,13 @@ TEST_CASE("BasicSubtexture", "[basic_subtexture]")
 
 	SECTION("BasicSubtexture::handle() accessor")
 	{
-		auto subtexture = rh::BasicSubtexture<entt::resource<SDL_Texture>>{texture};
+		auto subtexture = rh::BasicSubtexture<entt::resource<SDL_Texture>>{texture, rh::to_frect({0, 0, w, h})};
 		REQUIRE(subtexture.handle() == texture);
 	}
 
 	SECTION("BasicSubtexture::raw() accessor")
 	{
-		auto subtexture = rh::BasicSubtexture<entt::resource<SDL_Texture>>{texture};
+		auto subtexture = rh::BasicSubtexture<entt::resource<SDL_Texture>>{texture, rh::to_frect({0, 0, w, h})};
 		REQUIRE(subtexture.raw() == texture.handle().get());
 	}
 

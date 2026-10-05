@@ -16,12 +16,5 @@ auto SubtextureLoader::operator()(std::optional<Error>& error, entt::resource<SD
 	return operator()(error, texture, to_frect(rect));
 }
 
-auto SubtextureLoader::operator()(std::optional<Error>& error, entt::resource<SDL_Texture> texture) const noexcept -> result_type
-{
-	RH_UNUSED(error);
-
-	return std::make_shared<Subtexture>(texture);
-}
-
 } // namespace rh
 

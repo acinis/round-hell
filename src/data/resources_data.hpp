@@ -20,9 +20,9 @@ using namespace entt::literals;
 
 namespace rh {
 
-// ANIMATION_SPEED_* is in [ms], so bigger ANIMATION_SPEED_*_FACTOR is bigger time between frames
+// ANIMATION_SPEED_* is in [ns], so bigger ANIMATION_SPEED_*_FACTOR is bigger time between frames
 // and slower animation.
-inline constexpr Uint64 ANIMATION_SPEED_NORMAL = 140;
+inline constexpr Uint64 ANIMATION_SPEED_NORMAL = from_milliseconds(140);
 inline constexpr float ANIMATION_SPEED_FAST_FACTOR = 0.7142f;
 inline constexpr float ANIMATION_SPEED_SLOW_FACTOR = 1.3571f;
 inline constexpr Uint64 ANIMATION_SPEED_FAST = uround<Uint64>(ANIMATION_SPEED_NORMAL * ANIMATION_SPEED_FAST_FACTOR);

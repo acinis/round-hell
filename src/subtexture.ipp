@@ -1,5 +1,4 @@
 #include <cassert>
-#include <stdexcept>
 
 #include "errors.hpp"
 
@@ -33,22 +32,6 @@ BasicSubtexture<TextureHandleType>::BasicSubtexture(TextureHandleType texture, S
 :
 	BasicSubtexture(texture, rect.x, rect.y, rect.w, rect.h)
 {
-}
-
-template<SdlTexturePointerLike TextureHandleType>
-BasicSubtexture<TextureHandleType>::BasicSubtexture(TextureHandleType texture)
-:
-	BasicSubtexture(texture, 0.0f, 0.0f, 0.0f, 0.0f)
-{
-	float w {0.0f};
-	float h {0.0f};
-
-	if (! SDL_GetTextureSize(raw(), &w, &h)) {
-		throw std::runtime_error{make_sdl_error().to_string()};
-	}
-
-	_w = w;
-	_h = h;
 }
 
 template<SdlTexturePointerLike TextureHandleType>

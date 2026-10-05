@@ -50,5 +50,40 @@ constexpr auto saturating_sub(T x, T y) noexcept -> T
 	return x - y;
 }
 
+constexpr auto from_seconds(Uint64 value) noexcept -> Uint64
+{
+	return value * 1'000'000'000;
+}
+
+constexpr auto from_milliseconds(Uint64 value) noexcept -> Uint64
+{
+	return value * 1'000'000;
+}
+
+constexpr auto to_seconds(Uint64 value) noexcept -> Uint64
+{
+	return value / 1'000'000'000;
+}
+
+constexpr auto to_milliseconds(Uint64 value) noexcept -> Uint64
+{
+	return value / 1'000'000;
+}
+
+constexpr auto to_fseconds(Uint64 value) noexcept -> float
+{
+	return value / 1'000'000'000.0f;
+}
+
+constexpr auto to_fmilliseconds(Uint64 value) noexcept -> float
+{
+	return value / 1'000'000.0f;
+}
+
+constexpr auto to_fminutes(Uint64 value) noexcept -> float
+{
+	return value / 1'000'000'000.0f / 60.0f;
+}
+
 } // namespace rh
 
