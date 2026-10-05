@@ -45,7 +45,7 @@ public:
 
 	auto average_frame_rate() const noexcept -> float;
 
-	auto average_frame_time() const noexcept -> float; // in ms
+	auto average_frame_time() const noexcept -> Uint64; // in [ns]
 };
 
 } // namespace rh::S

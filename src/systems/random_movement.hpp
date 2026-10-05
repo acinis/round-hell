@@ -7,15 +7,17 @@
 #include <entt/entity/entity.hpp>
 #include <entt/entity/registry.hpp>
 
+#include "utils.hpp"
+
 namespace rh::S {
 
 class RandomMovement
 {
 	SDL_Rect _area; // Area of movement - eg. `{0, 0, window_size_x, window_size_y}`.
 
-	// We will change movement each `_amax` milliseconds.
-	Uint64 _accu = 0;
-	Uint64 _amax = 2500;
+	// We will change movement each `_amax` nanoseconds.
+	Uint64 _accu = from_milliseconds(0);
+	Uint64 _amax = from_milliseconds(2500);
 
 public:
 	RandomMovement() = delete;

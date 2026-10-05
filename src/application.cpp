@@ -61,12 +61,12 @@ auto Application::_print_welcome() -> void
 auto Application::_print_goodbye() -> void
 {
 	std::println("» Time elapsed: {:.4f}s ({:.1f}m)",
-		_systems.frame_counter.total_time() / 1000.0f,
-		_systems.frame_counter.total_time() / 1000.0f / 60.0f
+		to_fseconds(_systems.frame_counter.total_time()),
+		to_fminutes(_systems.frame_counter.total_time())
 	);
 	std::println("» Rendered {} frames", _systems.frame_counter.frame_count());
 	std::println("» At average there was {:.2f} frames per second", _systems.frame_counter.average_frame_rate());
-	std::println("» At average each frame took {:.2f} ms", _systems.frame_counter.average_frame_time());
+	std::println("» At average each frame took {:.2f} ms", to_fmilliseconds(_systems.frame_counter.average_frame_time()));
 }
 
 auto Application::_prepare_resources() noexcept -> Expected<void>
@@ -401,7 +401,7 @@ auto Application::run() noexcept -> Expected<int>
 	}
 
 	// fixed time of update step (can be many in row before frame rendering)
-	const Uint64 time_per_update {16}; // [ms], ie. ~60Hz
+	const Uint64 time_per_update {from_seconds(1) / 60}; // in [ns], ie. 60Hz
 
 	// max number of update steps, until loop bail out and skip steps to catch up
 	const std::size_t max_updates {10}; // TODO URGENT Why 10?
