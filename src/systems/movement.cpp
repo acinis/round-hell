@@ -26,17 +26,18 @@ auto Movement::run(Uint64 dt, entt::registry& registry, entt::entity top) -> voi
 
 		// World position, ie. world vector.
 		auto world_position = transform_point(c_world_transform.matrix());
+		auto speed_ns = c_movement.speed() / from_seconds(1);
 
 		auto distance = glm::distance(world_position, c_movement.destination());
 
-		// Time needed for whole distance (in miliseconds, converted to Uint64).
-		auto time_needed = static_cast<decltype(dt)>(std::nearbyint(distance / c_movement.speed() * 1000.f));
+		// Time needed for whole distance (in nanoseconds, converted to Uint64).
+		auto time_needed = static_cast<decltype(dt)>(std::nearbyint(distance / speed_ns));
 
 		// Time for current frame - use `dt` unless remaining time for completing distance is smaller.
 		auto time = std::min(dt, time_needed);
 
 		// Compute how much we must move forward.
-		auto to_move = c_movement.speed() * (time / 1000.0f); // Divide by 1000 to change units beetwen [s] and [ms].
+		auto to_move = speed_ns * time;
 
 		// Get vector that is pointing from entity to its destination, ie. destination_vector - entity_vector.
 		auto v = c_movement.destination() - world_position;

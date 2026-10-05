@@ -21,7 +21,7 @@ public:
 
 	// Wait (if needed) until frame duration will match given FPS limit.
 	// `elapsed` - time elapsed since beginning of current frame.
-	// Return delayed time in [ms] or zero if no delay was performed.
+	// Return delayed time in [ns] or zero if no delay was performed.
 	auto run(Uint64 elapsed) const noexcept -> Uint64;
 };
 

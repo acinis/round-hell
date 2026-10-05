@@ -1,5 +1,7 @@
 #include "systems/frame_counter.hpp"
 
+#include "utils.hpp"
+
 namespace rh::S {
 
 auto FrameCounter::reset() noexcept -> void
@@ -39,12 +41,12 @@ auto FrameCounter::frame_count() const noexcept -> Uint64
 
 auto FrameCounter::average_frame_rate() const noexcept -> float
 {
-	return frame_count() / (engine_time() / 1000.0f);
+	return frame_count() / to_fseconds(engine_time());
 }
 
-auto FrameCounter::average_frame_time() const noexcept -> float // in ms
+auto FrameCounter::average_frame_time() const noexcept -> Uint64
 {
-	return static_cast<float>(engine_time()) / static_cast<float>(frame_count());
+	return engine_time() / frame_count();
 }
 
 } // namespace rh::S

@@ -14,10 +14,10 @@ namespace rh::C {
 
 class Animation
 {
-	Uint64 _accumulator; // in ms
+	Uint64 _accumulator; // in ns
 	Uint16 _frame_index; // current
 	Uint16 _frame_count;
-	Uint64 _frame_duration; // in ms
+	Uint64 _frame_duration; // in ns
 	bool _looped;
 	bool _horizontal;
 
