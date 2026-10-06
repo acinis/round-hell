@@ -15,7 +15,7 @@ Simple bullet hell game with round game world.
 # History and roadmap
 
 * [x] v0.1.x - First attempt, abandoned.
-* [ ] v0.2.x - Gluing old pieces together.
+* [ ] **v0.2.x - Gluing old pieces together.**
 * [ ] ...
 * [ ] v0.3.0 - (Almost) All tests and documentation done. Cleaned-up code.
 * [ ] ...
