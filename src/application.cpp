@@ -172,12 +172,6 @@ auto Application::_spawn(entt::entity parent, entt::hashed_string::hash_type pro
 	return maker.get_entity();
 };
 
-Application::Application(int argc, char *argv[])
-:
-	Application(make_args(argc, argv))
-{
-}
-
 auto Application::_handle_app_args() noexcept -> void
 {
 	auto check = [&args = std::as_const(this->_app_args)](std::string_view arg)
@@ -334,6 +328,12 @@ auto Application::_loop(Uint64 time_per_update, std::size_t max_updates) noexcep
 	}
 
 	return 0;
+}
+
+Application::Application(int argc, char *argv[])
+:
+	Application(make_args(argc, argv))
+{
 }
 
 Application::Application(std::vector<std::string_view> args)
