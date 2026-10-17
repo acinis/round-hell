@@ -66,8 +66,9 @@ class Application
 	auto _loop(Uint64 time_per_update, std::size_t max_updates) noexcept -> Expected<int>;
 
 public:
+	Application();
 	explicit Application(int argc, char *argv[]);
-	Application(std::vector<std::string_view> args = {});
+	Application(std::vector<std::string_view> args);
 	~Application();
 
 	[[nodiscard]] auto run() noexcept -> Expected<int>;

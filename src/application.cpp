@@ -330,6 +330,12 @@ auto Application::_loop(Uint64 time_per_update, std::size_t max_updates) noexcep
 	return 0;
 }
 
+Application::Application()
+:
+	Application(std::vector<std::string_view>{})
+{
+}
+
 Application::Application(int argc, char *argv[])
 :
 	Application(make_args(argc, argv))
