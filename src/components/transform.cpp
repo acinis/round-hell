@@ -4,6 +4,12 @@
 
 namespace rh::C::internal {
 
+Transform::Transform() noexcept
+:
+	_matrix{1.0f}
+{
+}
+
 Transform::Transform(const glm::mat4& value) noexcept
 :
 	_matrix{value}

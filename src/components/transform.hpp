@@ -11,7 +11,7 @@ class Transform
 
 public:
 	// TODO Constructor that forwards to `glm::mat4` constructor?
-	Transform() noexcept = default;
+	Transform() noexcept;
 	Transform(const glm::mat4& value) noexcept;
 	Transform(glm::mat4&& value) noexcept;
 
