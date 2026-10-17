@@ -31,12 +31,6 @@ public:
 
 	/**
 	 * @brief Creates a new `Error` instance.
-	 * @param location Source location (by default a location where `Error` instance is created).
-	 */
-	Error(std::source_location location = std::source_location::current()) noexcept;
-
-	/**
-	 * @brief Creates a new `Error` instance.
 	 * @param message Error message.
 	 * @param location Source location (by default a location where `Error` instance is created).
 	 */

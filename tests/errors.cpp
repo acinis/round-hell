@@ -31,7 +31,6 @@ TEST_CASE("`rh::Error` class", "[errors]")
 	{
 		REQUIRE_FALSE(std::is_default_constructible_v<rh::Error>);
 
-		REQUIRE(std::is_nothrow_constructible_v<rh::Error, std::source_location>);
 		REQUIRE(std::is_nothrow_constructible_v<rh::Error, std::string>);
 		REQUIRE(std::is_nothrow_constructible_v<rh::Error, std::string, std::source_location>);
 
