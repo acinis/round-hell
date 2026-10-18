@@ -121,11 +121,6 @@ public:
 	BasicSubtexture(BasicSubtexture&&) noexcept = default;
 
 	/**
-	 * @brief Default destructor.
-	 */
-	~BasicSubtexture() = default;
-
-	/**
 	 * @brief Default copy assignment operator.
 	 * @return This `BasicSubtexture` instance.
 	 */
@@ -136,6 +131,11 @@ public:
 	 * @return This `BasicSubtexture` instance.
 	 */
 	auto operator=(BasicSubtexture&&) noexcept -> BasicSubtexture& = default;
+
+	/**
+	 * @brief Default destructor.
+	 */
+	~BasicSubtexture() = default;
 
 	/**
 	 * @brief Get handle to underlying resource.

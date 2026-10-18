@@ -61,11 +61,6 @@ public:
 	Error(Error&&) noexcept = default;
 
 	/**
-	 * @brief Default destructor.
-	 */
-	~Error() = default;
-
-	/**
 	 * @brief Default copy assignment operator.
 	 * @return This `Error` instance.
 	 */
@@ -76,6 +71,11 @@ public:
 	 * @return This `Error` instance.
 	 */
 	auto operator=(Error&&) noexcept -> Error& = default;
+
+	/**
+	 * @brief Default destructor.
+	 */
+	~Error() = default;
 
 	/**
 	 * @brief Most of comparisons are prohibited.

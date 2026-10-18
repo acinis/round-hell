@@ -72,11 +72,6 @@ public:
 	ResourceMultiCache(ResourceMultiCache&&) noexcept = default;
 
 	/**
-	 * @brief Default destructor.
-	 */
-	~ResourceMultiCache() = default;
-
-	/**
 	 * @brief Default copy assignment operator.
 	 * @return This `ResourceMultiCache` instance.
 	 */
@@ -87,6 +82,11 @@ public:
 	 * @return This `ResourceMultiCache` instance.
 	 */
 	auto operator=(ResourceMultiCache&&) noexcept -> ResourceMultiCache& = default;
+
+	/**
+	 * @brief Default destructor.
+	 */
+	~ResourceMultiCache() = default;
 
 	/**
 	 * @brief Loads a resource, if its identifier does not exist.
