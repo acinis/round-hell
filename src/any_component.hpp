@@ -22,18 +22,18 @@ public:
 
 	AnyComponent() = delete;
 
+	template<typename ComponentType>
+	explicit AnyComponent(const ComponentType& component) noexcept;
+
+	template<typename ComponentType>
+	explicit AnyComponent(ComponentType&& component) noexcept;
+
 	AnyComponent(const AnyComponent& component) noexcept = default;
 	AnyComponent(AnyComponent&& component) noexcept = default;
 	auto operator=(const AnyComponent&) noexcept -> AnyComponent& = default;
 	auto operator=(AnyComponent&&) noexcept -> AnyComponent& = default;
 
 	~AnyComponent() noexcept = default;
-
-	template<typename ComponentType>
-	explicit AnyComponent(const ComponentType& component) noexcept;
-
-	template<typename ComponentType>
-	explicit AnyComponent(ComponentType&& component) noexcept;
 
 	auto emplace_into(entt::registry& registry, entt::entity entity) const noexcept -> void;
 };
