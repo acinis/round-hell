@@ -15,14 +15,16 @@ class RandomMovement
 {
 	SDL_Rect _area; // Area of movement - eg. `{0, 0, window_size_x, window_size_y}`.
 
-	// We will change movement each `_amax` nanoseconds.
-	Uint64 _accu = from_milliseconds(0);
-	Uint64 _amax = from_milliseconds(2500);
+	// We will change movement each `_interval` nanoseconds.
+	Uint64 _accumulator = from_milliseconds(0);
+	Uint64 _interval = from_milliseconds(2500);
 
 public:
 	RandomMovement() = delete;
 	RandomMovement(SDL_Rect area) noexcept;
 	RandomMovement(int x, int y, int w, int h) noexcept;
+	RandomMovement(SDL_Rect area, Uint64 interval) noexcept;
+	RandomMovement(int x, int y, int w, int h, Uint64 interval) noexcept;
 
 	RandomMovement(const RandomMovement&) = default;
 	RandomMovement(RandomMovement&&) = default;
@@ -34,6 +36,9 @@ public:
 	auto area() const noexcept -> SDL_Rect;
 	auto area(SDL_Rect area) noexcept -> void;
 	auto area(int x, int y, int w, int h) noexcept -> void;
+
+	auto interval() const noexcept -> Uint64;
+	auto interval(Uint64 interval) noexcept -> void;
 
 	auto run(Uint64 dt, entt::registry& registry, entt::entity top) -> void;
 };

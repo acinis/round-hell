@@ -16,7 +16,22 @@ RandomMovement::RandomMovement(SDL_Rect area) noexcept
 
 RandomMovement::RandomMovement(int x, int y, int w, int h) noexcept
 :
-	_area{x, y, w, h}
+	RandomMovement(SDL_Rect{x, y, w, h})
+{
+}
+
+
+
+RandomMovement::RandomMovement(SDL_Rect area, Uint64 interval) noexcept
+:
+	_area{area},
+	_interval{interval}
+{
+}
+
+RandomMovement::RandomMovement(int x, int y, int w, int h, Uint64 interval) noexcept
+:
+	RandomMovement(SDL_Rect{x, y, w, h}, interval)
 {
 }
 
@@ -35,15 +50,25 @@ auto RandomMovement::area(int x, int y, int w, int h) noexcept -> void
 	_area = {x, y, w, h};
 }
 
+auto RandomMovement::interval() const noexcept -> Uint64
+{
+	return _interval;
+}
+
+auto RandomMovement::interval(Uint64 interval) noexcept -> void
+{
+	_interval = interval;
+}
+
 auto RandomMovement::run(Uint64 dt, entt::registry& registry, entt::entity top) -> void
 {
 	RH_UNUSED(top);
 
-	_accu += dt;
-	if (_accu >= _amax) {
-		_accu = 0;
+	_accumulator += dt;
+	if (_accumulator >= _interval) {
+		_accumulator = 0;
 	}
-	if (_accu != dt) {
+	if (_accumulator != dt) {
 		return;
 	}
 
