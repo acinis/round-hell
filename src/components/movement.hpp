@@ -13,7 +13,8 @@ class Movement
 	bool _done;
 
 public:
-	Movement(float speed = 0.0f) noexcept; // This will make `_done == true`.
+	Movement() noexcept; // This will make `_done == true`.
+	Movement(float speed) noexcept; // This will make `_done == true`.
 	Movement(glm::vec4 destination, float speed) noexcept;
 	Movement(float destination_x, float destination_y, float speed) noexcept;
 	Movement(float destination_x, float destination_y, float destination_z, float speed) noexcept;

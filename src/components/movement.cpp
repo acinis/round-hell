@@ -2,6 +2,13 @@
 
 namespace rh::C {
 
+Movement::Movement() noexcept
+:
+	Movement({0.0f, 0.0f, 0.0f, 1.0f}, 0.0f)
+{
+	_done = true;
+}
+
 Movement::Movement(float speed) noexcept
 :
 	Movement({0.0f, 0.0f, 0.0f, 1.0f}, speed)
