@@ -8,6 +8,12 @@
 
 namespace rh::S {
 
+FpsLimiter::FpsLimiter() noexcept
+:
+	FpsLimiter(0)
+{
+}
+
 FpsLimiter::FpsLimiter(std::size_t fps_limit) noexcept
 :
 	_fps_limit {fps_limit}
