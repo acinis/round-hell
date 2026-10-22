@@ -51,7 +51,7 @@ class ResourceMultiCache
 	 *         specialization.
 	 * @return Reference to appropriate cache instance.
 	 */
-	template<typename ResourceType, typename LoaderType = ResourceLoaderFor<ResourceType>::Type>
+	template<typename ResourceType, typename LoaderType = ResourceLoaderForT<ResourceType>>
 	[[nodiscard]] auto cache() noexcept -> entt::resource_cache<ResourceType, LoaderType>&;
 
 public:
@@ -128,7 +128,7 @@ public:
 	 * @param id Unique resource identifier.
 	 * @return Resource handle (may be invalid).
 	 */
-	template<typename ResourceType, typename LoaderType = ResourceLoaderFor<ResourceType>::Type>
+	template<typename ResourceType, typename LoaderType = ResourceLoaderForT<ResourceType>>
 	[[nodiscard]] auto get(entt::hashed_string::hash_type id) noexcept -> entt::resource<ResourceType>;
 };
 
