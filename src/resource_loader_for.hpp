@@ -42,6 +42,12 @@ struct ResourceLoaderFor
 	using Type = void;
 };
 
+/**
+ * @brief Helper alias.
+ */
+template<typename ResourceType>
+using ResourceLoaderForT = ResourceLoaderFor<ResourceType>::Type;
+
 } // namespace rh
 
 #endif // ROUNDHELL_RESOURCE_LOADER_FOR_HPP
