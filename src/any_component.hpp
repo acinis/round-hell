@@ -12,11 +12,13 @@ namespace rh {
 // Wrapper around `std::any` that knows how to `emplace()` stored component in `entt::registry`.
 class AnyComponent
 {
+	using EmplacerType = std::function<void(entt::registry&, entt::entity, const std::any&)>;
+
 	std::any _component;
-	std::function<void(entt::registry&, entt::entity, const std::any&)> _emplacer;
+	EmplacerType _emplacer;
 
 	template<typename ComponentType>
-	static auto _make_emplacer() noexcept;
+	static auto _make_emplacer() noexcept -> EmplacerType;
 
 public:
 

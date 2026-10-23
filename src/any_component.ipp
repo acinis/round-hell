@@ -3,7 +3,7 @@
 namespace rh {
 
 template<typename ComponentType>
-auto AnyComponent::_make_emplacer() noexcept
+auto AnyComponent::_make_emplacer() noexcept -> EmplacerType
 {
 	return [](entt::registry& registry, entt::entity entity, const std::any& component) -> void
 	{
