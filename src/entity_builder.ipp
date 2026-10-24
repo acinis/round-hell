@@ -66,6 +66,13 @@ auto EntityBuilder::replace_tag() -> EntityBuilder&
 	return *this;
 }
 
+template<entt::id_type Tag, std::invocable... Invocables>
+auto EntityBuilder::patch_tag(Invocables&&... invocables) -> EntityBuilder&
+{
+	_registry.patch<entt::tag<Tag>>(_entity, std::forward<Invocables>(invocables)...);
+	return *this;
+}
+
 template<entt::id_type Tag>
 auto EntityBuilder::erase_tag() -> EntityBuilder&
 {

@@ -53,7 +53,8 @@ public:
 	template<entt::id_type Tag>
 	auto replace_tag() -> EntityBuilder&;
 
-	// No need for `patch_tag`, replace will suffice in all cases.
+	template<entt::id_type Tag, std::invocable... Invocables>
+	auto patch_tag(Invocables&&... invocables) -> EntityBuilder&;
 
 	template<entt::id_type Tag>
 	auto erase_tag() -> EntityBuilder&;
