@@ -155,6 +155,22 @@ auto Application::_handle_input() const noexcept -> bool
 	return running;
 }
 
+auto Application::_handle_app_args() noexcept -> void
+{
+	auto check = [&args = std::as_const(this->_app_args)](std::string_view arg)
+	{
+		return args.end() != std::find(args.begin(), args.end(), arg);
+	};
+
+	if (check("--no-fps-limit"sv)) {
+		_systems.fps_limiter.limit(0);
+	}
+
+	if (check("--low-power"sv)) {
+		_low_power = true;
+	}
+}
+
 auto Application::_spawn(entt::entity parent, entt::hashed_string::hash_type prototype_id, SDL_FPoint position) noexcept -> entt::entity
 {
 	int order = static_cast<int>(position.y);
@@ -171,22 +187,6 @@ auto Application::_spawn(entt::entity parent, entt::hashed_string::hash_type pro
 
 	return maker.get_entity();
 };
-
-auto Application::_handle_app_args() noexcept -> void
-{
-	auto check = [&args = std::as_const(this->_app_args)](std::string_view arg)
-	{
-		return args.end() != std::find(args.begin(), args.end(), arg);
-	};
-
-	if (check("--no-fps-limit"sv)) {
-		_systems.fps_limiter.limit(0);
-	}
-
-	if (check("--low-power"sv)) {
-		_low_power = true;
-	}
-}
 
 auto Application::_mockup() -> void
 {

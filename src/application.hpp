@@ -52,11 +52,11 @@ class Application
 
 	auto _handle_app_args() noexcept -> void;
 
-	auto _mockup() -> void;
-	auto _mockup_swarm(std::size_t swarm_size = 100) -> void;
-
 	// Spawn game object
 	auto _spawn(entt::entity parent, entt::hashed_string::hash_type prototype_id, SDL_FPoint position) noexcept -> entt::entity;
+
+	auto _mockup() -> void;
+	auto _mockup_swarm(std::size_t swarm_size = 100) -> void;
 
 	// TODO These two are common for (almost) all renderers, but currently there is no right place
 	//      for them. Maybe later move to some renderer base class (if we decide to make one)?
