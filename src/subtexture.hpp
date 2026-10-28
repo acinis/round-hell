@@ -16,13 +16,6 @@
 namespace rh {
 
 /**
- * @brief
- * @tparam
- */
-template<typename T>
-concept SdlTexturePointerLike = ConcretePointerLike<T, SDL_Texture>;
-
-/**
  * @brief Tight wrapper around `SDL_Texture` that has offset and size. Ideal for using with atlases.
  * @tparam
  */

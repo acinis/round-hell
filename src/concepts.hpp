@@ -9,6 +9,8 @@
 #include <concepts>
 #include <type_traits>
 
+#include <SDL3/SDL_render.h>
+
 /** @cond INTERNAL */
 namespace rh::internal {
 
@@ -51,6 +53,13 @@ concept ConcretePointerLike =
 		{ p.operator->() } -> std::same_as<decltype(&u)>;
 	}
 ;
+
+/**
+ * @brief Satisfied if `T` can be used as pointer to `SDL_Texture`.
+ * @tparam T Type to check.
+ */
+template<typename T>
+concept SdlTexturePointerLike = ConcretePointerLike<T, SDL_Texture>;
 
 } // namespace rh
 
