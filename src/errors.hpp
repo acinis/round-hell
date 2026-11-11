@@ -156,7 +156,147 @@ using Unexpected = std::unexpected<Error>;
  */
 auto make_sdl_error(std::string_view message = {}, std::source_location location = std::source_location::current()) -> Error;
 
+/** @internal */
+
+namespace internal {
+
+/**
+ * @brief Internal helper for `rh::Unexpected`.
+ *
+ * This helper is intended to be used as `rh::Unexpected<ErrorType>` instead of `std::unexpected<ErrorType>`.
+ * It will construct `ErrorType` from given arguments with correct source location.
+ * Using `std::unexpected` directly leads to source location set to `std::expected` constructor.
+ *
+ * Usually we want source location pointing to place where `rh::Unexpected` instance is created, like `return Unexpected{"Message"};`.
+ * Without this helper only way of getting correct source location is creating `ErrorType` directly, like `return Unexpected{Error{"Message"}};`.
+ * This helper will be converted implicitly to `std::expected<SuccessType, ErrorType>` so it can be used transparently in return statement (for any `SuccessType`).
+ *
+ * `ErrorType` requirements:
+ * - Type is copyable and movable.
+ * - Object can be constructed from at most three arguments (plus `std::source_location` as last argument).
+ *
+ * @attention This helper was designed to be used with `rh::Error` as `ErrorType`. It is templated over `ErrorType` only for convenience.
+ *
+ * @tparam ErrorType Type used as error.
+ */
+template<typename ErrorType>
+struct [[nodiscard]] UnexpectedHelper
+{
+	/** @brief Error instance. */
+	ErrorType _error;
+
+public:
+
+	/**
+	 * @brief Copy constructor (alternative form with non-const reference argument).
+	 *
+	 * Explicitly provided so compiler will not try to use templated forwarding constructors instead of copy and move ones.
+	 *
+	 * @param error The instance to copy from.
+	 */
+	explicit UnexpectedHelper(ErrorType& error) noexcept;
+
+	/**
+	 * @brief Copy constructor.
+	 *
+	 * Explicitly provided so compiler will not try to use templated forwarding constructors instead of copy and move ones.
+	 *
+	 * @param error The instance to copy from.
+	 */
+	explicit UnexpectedHelper(const ErrorType& error) noexcept;
+
+	/**
+	 * @brief Move constructor.
+	 *
+	 * Explicitly provided so compiler will not try to use templated forwarding constructors instead of copy and move ones.
+	 *
+	 * @param error The instance to move from.
+	 */
+	explicit UnexpectedHelper(ErrorType&& error) noexcept;
+
+	/**
+	 * @brief Move constructor (alternative form with const reference argument).
+	 *
+	 * Explicitly provided so compiler will not try to use templated forwarding constructors instead of copy and move ones.
+	 *
+	 * @note Const rvalue references are rather rare - this overload is just for completeness (so templated constructors won't be picked in some edge cases).
+	 * @note If somehow this constructor will be called - it will make a copy (not move!) due to constant argument.
+	 *
+	 * @param error The instance to copy (sic!) from.
+	 */
+	explicit UnexpectedHelper(const ErrorType&& error) noexcept;
+
+	/**
+	 * @brief Construct internal `Error` instance from passed arguments.
+	 * @param location Source location (by default the location where `UnexpectedHelper` instance is created).
+	 */
+	explicit UnexpectedHelper(std::source_location location = std::source_location::current()) noexcept;
+
+	/**
+	 * @brief @copybrief UnexpectedHelper(std::source_location)
+	 * @tparam T1 Type of first argument.
+	 * @param arg1 First argument that will be forwarded to `Error`'s constructor.
+	 * @param location Source location (by default the location where `UnexpectedHelper` instance is created).
+	 */
+	template<typename T1>
+	explicit UnexpectedHelper(T1&& arg1, std::source_location location = std::source_location::current()) noexcept;
+
+	/**
+	 * @brief @copybrief UnexpectedHelper(std::source_location)
+	 * @tparam T1 Type of first argument.
+	 * @tparam T2 Type of second argument.
+	 * @param arg1 First argument that will be forwarded to `Error`'s constructor.
+	 * @param arg2 Second argument that will be forwarded to `Error`'s constructor.
+	 * @param location Source location (by default the location where `UnexpectedHelper` instance is created).
+	 */
+	template<typename T1, typename T2>
+	explicit UnexpectedHelper(T1&& arg1, T2&& arg2, std::source_location location = std::source_location::current()) noexcept;
+
+	/**
+	 * @brief @copybrief UnexpectedHelper(std::source_location)
+	 * @tparam T1 Type of first argument.
+	 * @tparam T2 Type of second argument.
+	 * @tparam T3 Type of third argument.
+	 * @param arg1 First argument that will be forwarded to `Error`'s constructor.
+	 * @param arg2 Second argument that will be forwarded to `Error`'s constructor.
+	 * @param arg3 Third argument that will be forwarded to `Error`'s constructor.
+	 * @param location Source location (by default the location where `UnexpectedHelper` instance is created).
+	 */
+	template<typename T1, typename T2, typename T3>
+	explicit UnexpectedHelper(T1&& arg1, T2&& arg2, T3&& arg3, std::source_location location = std::source_location::current()) noexcept;
+
+	/**
+	 * @brief Catch-all constructor - produce cleaner compilation error when there are more arguments than we can handle.
+	 *
+	 * This constructor will be called if someone tries to use `Unexpected` with unsupported number of arguments.
+	 *
+	 * @tparam Args Types of arguments.
+	 */
+	template<typename... Args>
+	explicit UnexpectedHelper(Args&&...) noexcept;
+
+	/**
+	 * @brief Convert this instance to `rh::Expected` (aka `std::expected`).
+	 * @note This overoad will move from internal `ErrorType` instance.
+	 */
+	template<typename SuccessType>
+	[[nodiscard]] operator std::expected<SuccessType, ErrorType>() && noexcept;
+
+	/**
+	 * @brief Convert this instance to `rh::Expected` (aka `std::expected`).
+	 * @note This overoad will copy internal `ErrorType` instance.
+	 */
+	template<typename SuccessType>
+	[[nodiscard]] operator std::expected<SuccessType, ErrorType>() & noexcept;
+};
+
+} // namespace internal
+
+/** @endinternal */
+
 } // namespace rh
+
+#include "errors.ipp"
 
 #endif // ROUNDHELL_ERRORS_HPP
 
