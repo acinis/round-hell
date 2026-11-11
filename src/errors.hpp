@@ -133,13 +133,15 @@ public:
 template<typename T>
 using Expected = std::expected<T, Error>;
 
+namespace internal { template<typename ErrorType> class UnexpectedHelper; }
+
 /**
  * @brief Helper for creating `std::expected` with `rh::Error` as the unexpected value.
  *
  * Not strictly needed, just for completeness' sake.
  *
  */
-using Unexpected = std::unexpected<Error>;
+using Unexpected = internal::UnexpectedHelper<Error>;
 
 // TODO Rename to `last_sdl_error()`?
 /**

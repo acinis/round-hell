@@ -103,8 +103,10 @@ TEST_CASE("`rh::Error` class - Setters and getters", "[errors]")
 
 TEST_CASE("`std::expected` aliases", "[errors]")
 {
-	REQUIRE(std::is_same_v<std::expected<int, rh::Error>, rh::Expected<int>>);
-	REQUIRE(std::is_same_v<std::unexpected<rh::Error>, rh::Unexpected>);
+	REQUIRE(std::is_same_v<rh::Expected<int>, std::expected<int, rh::Error>>);
+
+	// There is a templated conversion operator - we cannot test all possibilities - so check with at least one example type.
+	REQUIRE(std::is_nothrow_convertible_v<rh::Unexpected, std::expected<int, rh::Error>>);
 }
 
 TEST_CASE("`make_sdl_error()` helper", "[errors]")
