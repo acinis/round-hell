@@ -9,12 +9,6 @@
 
 namespace rh {
 
-Error::Error(std::source_location location) noexcept
-:
-	_location{std::move(location)}
-{
-}
-
 Error::Error(const std::string& message, std::source_location location) noexcept
 :
 	_message{message},

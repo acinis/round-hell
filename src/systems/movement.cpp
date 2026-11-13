@@ -42,7 +42,7 @@ auto Movement::run(Uint64 dt, entt::registry& registry, entt::entity top) -> voi
 		// Get vector that is pointing from entity to its destination, ie. destination_vector - entity_vector.
 		auto v = c_movement.destination() - world_position;
 
-		// Normalize it - so it will has length equal 1.
+		// Normalize it, so it will have length equal to 1.
 		auto n = glm::normalize(v);
 
 		// Set length to amount of distance we must move.

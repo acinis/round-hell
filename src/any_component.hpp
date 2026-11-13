@@ -12,15 +12,23 @@ namespace rh {
 // Wrapper around `std::any` that knows how to `emplace()` stored component in `entt::registry`.
 class AnyComponent
 {
+	using EmplacerType = std::function<void(entt::registry&, entt::entity, const std::any&)>;
+
 	std::any _component;
-	std::function<void(entt::registry&, entt::entity, const std::any&)> _emplacer;
+	EmplacerType _emplacer;
 
 	template<typename ComponentType>
-	static auto _make_emplacer() noexcept;
+	static auto _make_emplacer() noexcept -> EmplacerType;
 
 public:
 
 	AnyComponent() = delete;
+
+	template<typename ComponentType>
+	explicit AnyComponent(const ComponentType& component) noexcept;
+
+	template<typename ComponentType>
+	explicit AnyComponent(ComponentType&& component) noexcept;
 
 	AnyComponent(const AnyComponent& component) noexcept = default;
 	AnyComponent(AnyComponent&& component) noexcept = default;
@@ -28,12 +36,6 @@ public:
 	auto operator=(AnyComponent&&) noexcept -> AnyComponent& = default;
 
 	~AnyComponent() noexcept = default;
-
-	template<typename ComponentType>
-	explicit AnyComponent(const ComponentType& component) noexcept;
-
-	template<typename ComponentType>
-	explicit AnyComponent(ComponentType&& component) noexcept;
 
 	auto emplace_into(entt::registry& registry, entt::entity entity) const noexcept -> void;
 };

@@ -2,6 +2,12 @@
 
 namespace rh::C {
 
+Order::Order() noexcept
+:
+	_z_index{DEFAULT}
+{
+}
+
 Order::Order(ValueType z_index) noexcept
 :
 	_z_index {z_index}

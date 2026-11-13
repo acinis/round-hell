@@ -14,7 +14,8 @@ class FpsLimiter
 
 public:
 
-	FpsLimiter(std::size_t fps_limit = 0) noexcept;
+	FpsLimiter() noexcept;
+	FpsLimiter(std::size_t fps_limit) noexcept;
 
 	auto limit(std::size_t value) noexcept -> void;
 	auto limit() const noexcept -> std::size_t;

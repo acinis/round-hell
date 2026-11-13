@@ -16,13 +16,6 @@
 namespace rh {
 
 /**
- * @brief
- * @tparam
- */
-template<typename T>
-concept SdlTexturePointerLike = ConcretePointerLike<T, SDL_Texture>;
-
-/**
  * @brief Tight wrapper around `SDL_Texture` that has offset and size. Ideal for using with atlases.
  * @tparam
  */
@@ -121,11 +114,6 @@ public:
 	BasicSubtexture(BasicSubtexture&&) noexcept = default;
 
 	/**
-	 * @brief Default destructor.
-	 */
-	~BasicSubtexture() = default;
-
-	/**
 	 * @brief Default copy assignment operator.
 	 * @return This `BasicSubtexture` instance.
 	 */
@@ -136,6 +124,11 @@ public:
 	 * @return This `BasicSubtexture` instance.
 	 */
 	auto operator=(BasicSubtexture&&) noexcept -> BasicSubtexture& = default;
+
+	/**
+	 * @brief Default destructor.
+	 */
+	~BasicSubtexture() = default;
 
 	/**
 	 * @brief Get handle to underlying resource.

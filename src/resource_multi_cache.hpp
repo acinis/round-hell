@@ -51,7 +51,7 @@ class ResourceMultiCache
 	 *         specialization.
 	 * @return Reference to appropriate cache instance.
 	 */
-	template<typename ResourceType, typename LoaderType = ResourceLoaderFor<ResourceType>::Type>
+	template<typename ResourceType, typename LoaderType = ResourceLoaderForT<ResourceType>>
 	[[nodiscard]] auto cache() noexcept -> entt::resource_cache<ResourceType, LoaderType>&;
 
 public:
@@ -72,11 +72,6 @@ public:
 	ResourceMultiCache(ResourceMultiCache&&) noexcept = default;
 
 	/**
-	 * @brief Default destructor.
-	 */
-	~ResourceMultiCache() = default;
-
-	/**
 	 * @brief Default copy assignment operator.
 	 * @return This `ResourceMultiCache` instance.
 	 */
@@ -87,6 +82,11 @@ public:
 	 * @return This `ResourceMultiCache` instance.
 	 */
 	auto operator=(ResourceMultiCache&&) noexcept -> ResourceMultiCache& = default;
+
+	/**
+	 * @brief Default destructor.
+	 */
+	~ResourceMultiCache() = default;
 
 	/**
 	 * @brief Loads a resource, if its identifier does not exist.
@@ -128,7 +128,7 @@ public:
 	 * @param id Unique resource identifier.
 	 * @return Resource handle (may be invalid).
 	 */
-	template<typename ResourceType, typename LoaderType = ResourceLoaderFor<ResourceType>::Type>
+	template<typename ResourceType, typename LoaderType = ResourceLoaderForT<ResourceType>>
 	[[nodiscard]] auto get(entt::hashed_string::hash_type id) noexcept -> entt::resource<ResourceType>;
 };
 

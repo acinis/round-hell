@@ -19,10 +19,10 @@ public:
 	static constexpr ValueType HIGHEST = std::numeric_limits<ValueType>::max();
 
 private:
-	ValueType _z_index = DEFAULT;
+	ValueType _z_index;
 
 public:
-	Order() noexcept = default;
+	Order() noexcept;
 	Order(ValueType z_index) noexcept;
 	~Order() = default;
 
